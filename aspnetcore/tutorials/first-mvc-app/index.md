@@ -1,35 +1,33 @@
 ---
-title: Building your first ASP.NET Core MVC app with Visual Studio | Microsoft Docs
+title: Create a web app with ASP.NET Core MVC on Windows
 author: rick-anderson
-description: 
-keywords: ASP.NET Core,
-ms.author: riande
+description: Table of contents for introduction to ASP.NET Core MVC using Visual Studio on Windows.
 manager: wpickett
-ms.date: 10/14/2016
-ms.topic: article
-ms.assetid: 959ff4ca-be2d-444c-ac04-789e787146f3
+ms.author: riande
+ms.date: 10/26/2017
+ms.prod: asp.net-core
 ms.technology: aspnet
-ms.prod: aspnet-core
+ms.topic: get-started-article
 uid: tutorials/first-mvc-app/index
 ---
-# Building your first ASP.NET Core MVC app with Visual Studio
+# Create a web app with ASP.NET Core MVC using Visual Studio
 
-* [Getting started with ASP.NET Core MVC and Visual Studio](start-mvc.md)
+[!INCLUDE[consider RP](../../includes/razor.md)]
 
-* [Adding a controller](adding-controller.md)
+There are 3 versions of this tutorial:
 
-* [Adding a view](adding-view.md)
+* Windows: This series
+* macOS: [Create an ASP.NET Core MVC app with Visual Studio for Mac](xref:tutorials/first-mvc-app-mac/start-mvc)
+* macOS, Linux, and Windows: [Create an ASP.NET Core MVC app with Visual Studio Code](xref:tutorials/first-mvc-app-xplat/start-mvc)
+The tutorial series includes the following:
 
-* [Adding a model](adding-model.md)
-
-* [Working with SQL Server LocalDB](working-with-sql.md)
-
-* [Controller methods and views](controller-methods-views.md)
-
-* [Adding Search](search.md)
-
-* [Adding a New Field](new-field.md)
-
-* [Adding Validation](validation.md)
-
-* [Examining the Details and Delete methods](details.md)
+1. [Getting started](start-mvc.md)
+1. [Adding a controller](adding-controller.md)
+1. [Adding a view](adding-view.md)
+1. [Adding a model](adding-model.md)
+1. [Working with SQL Server LocalDB](working-with-sql.md)
+1. [Controller methods and views](controller-methods-views.md)
+1. [Adding Search](search.md)
+1. [Adding a New Field](new-field.md)
+1. [Adding Validation](validation.md)
+1. [Examining the Details and Delete methods](details.md)

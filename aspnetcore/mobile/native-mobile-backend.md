@@ -1,20 +1,18 @@
 ---
-title: Creating Backend Services for Native Mobile Applications | Microsoft Docs
+title: Creating Backend Services for Native Mobile Applications
 author: ardalis
 description: 
-keywords: ASP.NET Core,
-ms.author: riande
 manager: wpickett
+ms.author: riande
 ms.date: 10/14/2016
-ms.topic: article
-ms.assetid: 3b6a32f2-5af9-4ede-9b7f-17ab300526d0
+ms.prod: asp.net-core
 ms.technology: aspnet
-ms.prod: aspnet-core
+ms.topic: article
 uid: mobile/native-mobile-backend
 ---
 # Creating Backend Services for Native Mobile Applications
 
-By [Steve Smith](http://ardalis.com)
+By [Steve Smith](https://ardalis.com/)
 
 Mobile apps can easily communicate with ASP.NET Core backend services.
 
@@ -24,25 +22,23 @@ Mobile apps can easily communicate with ASP.NET Core backend services.
 
 This tutorial demonstrates how to create backend services using ASP.NET Core MVC to support native mobile apps. It uses the [Xamarin Forms ToDoRest app](https://developer.xamarin.com/guides/xamarin-forms/web-services/consuming/rest/) as its native client, which includes separate native clients for Android, iOS, Windows Universal, and Window Phone devices. You can follow the linked tutorial to create the native app (and install the necessary free Xamarin tools), as well as download the Xamarin sample solution. The Xamarin sample includes an ASP.NET Web API 2 services project, which this article's ASP.NET Core app replaces (with no changes required by the client).
 
-![image](native-mobile-backend/_static/todo-android.png)
+![To Do Rest application running on an Android smartphone](native-mobile-backend/_static/todo-android.png)
 
 ### Features
 
 The ToDoRest app supports listing, adding, deleting, and updating To-Do items. Each item has an ID, a Name, Notes, and a property indicating whether it's been Done yet.
 
-The main view of the items, as shown above, lists each item's name and indicates if it is done with a checkmark.
+The main view of the items, as shown above, lists each item's name and indicates if it's done with a checkmark.
 
 Tapping the `+` icon opens an add item dialog:
 
-![image](native-mobile-backend/_static/todo-android-new-item.png)
+![Add item dialog](native-mobile-backend/_static/todo-android-new-item.png)
 
 Tapping an item on the main list screen opens up an edit dialog where the item's Name, Notes, and Done settings can be modified, or the item can be deleted:
 
-![image](native-mobile-backend/_static/todo-android-edit-item.png)
+![Edit item dialog](native-mobile-backend/_static/todo-android-edit-item.png)
 
 This sample is configured by default to use backend services hosted at developer.xamarin.com, which allow read-only operations. To test it out yourself against the ASP.NET Core app created in the next section running on your computer, you'll need to update the app's `RestUrl` constant. Navigate to the `ToDoREST` project and open the *Constants.cs* file. Replace the `RestUrl` with a URL that includes your machine's IP address (not localhost or 127.0.0.1, since this address is used from the device emulator, not from your machine). Include the port number as well (5000). In order to test that your services work with a device, ensure you don't have an active firewall blocking access to this port.
-
-<!-- literal_block {"ids": [], "names": [], "highlight_args": {}, "backrefs": [], "dupnames": [], "linenos": false, "classes": [], "xml:space": "preserve", "language": "csharp"} -->
 
 ```csharp
 // URL of REST service (Xamarin ReadOnly Service)
@@ -56,7 +52,7 @@ public static string RestUrl = "http://192.168.1.207:5000/api/todoitems/{0}";
 
 Create a new ASP.NET Core Web Application in Visual Studio. Choose the Web API template and No Authentication. Name the project *ToDoApi*.
 
-![image](native-mobile-backend/_static/web-api-template.png)
+![New ASP.NET Web Application dialog with Web API project template selected](native-mobile-backend/_static/web-api-template.png)
 
 The application should respond to all requests made to port 5000. Update *Program.cs* to include `.UseUrls("http://*:5000")` to achieve this:
 
@@ -106,13 +102,13 @@ The `List` method returns a 200 OK response code and all of the ToDo items, seri
 
 You can test your new API method using a variety of tools, such as [Postman](https://www.getpostman.com/docs/), shown here:
 
-![image](native-mobile-backend/_static/postman-get.png)
+![Postman console showing a GET request for todoitems and the body of the response showing the JSON for three items returned](native-mobile-backend/_static/postman-get.png)
 
 ### Creating Items
 
-By convention, creating new data items is mapped to the HTTP POST verb. The `Create` method has an `[HttpPost]` attribute applied to it, and accepts an ID parameter and a `ToDoItem` instance. The HTTP verb attributes, like `[HttpPost]`, optionally accept a route template string (`{id}` in this example). This has the same effect as adding a `[Route]` attribute to the action. Since the `item` argument will be passed in the body of the POST, this parameter is decorated with the `[FromBody]` attribute.
+By convention, creating new data items is mapped to the HTTP POST verb. The `Create` method has an `[HttpPost]` attribute applied to it, and accepts a `ToDoItem` instance. Since the `item` argument will be passed in the body of the POST, this parameter is decorated with the `[FromBody]` attribute.
 
-Inside the method, the item is checked for validity and prior existence in the data store, and if no issues occur, it is added using the repository. Checking `ModelState.IsValid` performs [model validation](../mvc/models/validation.md), and should be done in every API method that accepts user input.
+Inside the method, the item is checked for validity and prior existence in the data store, and if no issues occur, it's added using the repository. Checking `ModelState.IsValid` performs [model validation](../mvc/models/validation.md), and should be done in every API method that accepts user input.
 
 [!code-csharp[Main](native-mobile-backend/sample/ToDoApi/src/ToDoApi/Controllers/ToDoItemsController.cs?range=25-46)]
 
@@ -122,7 +118,7 @@ The sample uses an enum containing error codes that are passed to the mobile cli
 
 Test adding new items using Postman by choosing the POST verb providing the new object in JSON format in the Body of the request. You should also add a request header specifying a `Content-Type` of `application/json`.
 
-![image](native-mobile-backend/_static/postman-post.png)
+![Postman console showing a POST and response](native-mobile-backend/_static/postman-post.png)
 
 The method returns the newly created item in the response.
 
@@ -132,9 +128,9 @@ Modifying records is done using HTTP PUT requests. Other than this change, the `
 
 [!code-csharp[Main](native-mobile-backend/sample/ToDoApi/src/ToDoApi/Controllers/ToDoItemsController.cs?range=48-69)]
 
-To test with Postman, change the verb to PUT and add the ID of the record being updated to the URL. Specify the updated object data in the Body of the request.
+To test with Postman, change the verb to PUT. Specify the updated object data in the Body of the request.
 
-![image](native-mobile-backend/_static/postman-put.png)
+![Postman console showing a PUT and response](native-mobile-backend/_static/postman-put.png)
 
 This method returns a `NoContent` (204) response when successful, for consistency with the pre-existing API.
 
@@ -146,10 +142,10 @@ Deleting records is accomplished by making DELETE requests to the service, and p
 
 Note that when testing the delete functionality, nothing is required in the Body of the request.
 
-![image](native-mobile-backend/_static/postman-delete.png)
+![Postman console showing a DELETE and response](native-mobile-backend/_static/postman-delete.png)
 
 ## Common Web API Conventions
 
 As you develop the backend services for your app, you will want to come up with a consistent set of conventions or policies for handling cross-cutting concerns. For example, in the service shown above, requests for specific records that weren't found received a `NotFound` response, rather than a `BadRequest` response. Similarly, commands made to this service that passed in model bound types always checked `ModelState.IsValid` and returned a `BadRequest` for invalid model types.
 
-Once you've identified a common policy for your APIs, you can usually encapsulate it in a [filter](../mvc/controllers/filters.md). Learn more about [how to encapsulate common API policies in ASP.NET Core MVC applications](https://msdn.microsoft.com/en-us/magazine/mt767699.aspx).
+Once you've identified a common policy for your APIs, you can usually encapsulate it in a [filter](../mvc/controllers/filters.md). Learn more about [how to encapsulate common API policies in ASP.NET Core MVC applications](https://msdn.microsoft.com/magazine/mt767699.aspx).
